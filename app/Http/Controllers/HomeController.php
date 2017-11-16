@@ -36,61 +36,63 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index($wk = false) {
-        $filter_list = [];
-        $filter_selection = [];
-        $name_selection = [];
-        $dash_data = [
-            'calls' => 0, 'emails' => 0,
-            'crr' => 0, 'sas' => 0
-        ];
-        $entries = [];
-        switch (Auth::user()->roles) {
-            case 'SAS':
-            case 'MANAGER':
-            case 'SOM':
-                $filter_selection = $this->teams->lists('name', 'departmentid')->sort();
-                $filter_list = $this->exemptions;
-                $entries = $this->teams->reject(function($value) {
-                    return in_array($value->departmentid, $this->exemptions);
-                });
-                $name_selection = $entries->lists('name', 'departmentid')->sort();
-
-                break;
-            case 'SUPERVISOR':
-            case 'AGENT':
-                if (Auth::user()->roles == 'SUPERVISOR') {
-                    $_entries = Auth::user()->subordinates();
-                    $_entries->push(Auth::user());
-                } else {
-                    $_entries = Auth::user()->superior->subordinates();
-                    $_entries->push(Auth::user()->superior);
-                }
-                $filter_selection = $_entries->lists('lfname', 'uid')->sort();
-                $filter_list = $this->exemptions;
-                $entries = $_entries->reject(function($value) {
-                    return in_array($value->uid, $this->exemptions);
-                });
-        }
-
-        $total_returns = 0;
-        $total_yes = 0;
-        foreach ($entries as $entry) {
-            $dash_data['sas'] += $entry->upsells()->weekly($wk)->valid()->count();
-            $dash_data['calls'] += $entry->cases()->weekly($wk)->calls()->sum('case_count');
-            $dash_data['emails'] += $entry->cases()->weekly($wk)->emails()->sum('case_count');
-            $total_yes += $entry->feedbacks()->weekly($wk)->requestSolved()->count();
-            $total_returns += $entry->feedbacks()->weekly($wk)->count();
-            //$cosmo = $entry->cosmocom()->weekly($wk)->get();
-        }
-        $dash_data['crr'] = $total_returns ? round(($total_yes / $total_returns) * 100, 2) : '';
-
-        $data['dash_data'] = $dash_data;
-        $data['page_title'] = 'Dashboard';
-        $data['page_desc'] = 'Shows data overview for the current week.';
-        $data['filter_selection'] = $filter_selection;
-        $data['filter_list'] = $filter_list;
-        $data['name_selection'] = $name_selection;
-        return view('dashboard', $data);
+//        $filter_list = [];
+//        $filter_selection = [];
+//        $name_selection = [];
+//        $dash_data = [
+//            'calls' => 0, 'emails' => 0,
+//            'crr' => 0, 'sas' => 0
+//        ];
+//        $entries = [];
+//        switch (Auth::user()->roles) {
+//            case 'SAS':
+//            case 'MANAGER':
+//            case 'SOM':
+//                $filter_selection = $this->teams->lists('name', 'departmentid')->sort();
+//                $filter_list = $this->exemptions;
+//                $entries = $this->teams->reject(function($value) {
+//                    return in_array($value->departmentid, $this->exemptions);
+//                });
+//                $name_selection = $entries->lists('name', 'departmentid')->sort();
+//
+//                break;
+//            case 'SUPERVISOR':
+//            case 'AGENT':
+//                if (Auth::user()->roles == 'SUPERVISOR') {
+//                    $_entries = Auth::user()->subordinates();
+//                    $_entries->push(Auth::user());
+//                } else {
+//                    $_entries = Auth::user()->superior->subordinates();
+//                    $_entries->push(Auth::user()->superior);
+//                }
+//                $filter_selection = $_entries->lists('lfname', 'uid')->sort();
+//                $filter_list = $this->exemptions;
+//                $entries = $_entries->reject(function($value) {
+//                    return in_array($value->uid, $this->exemptions);
+//                });
+//        }
+//
+//        $total_returns = 0;
+//        $total_yes = 0;
+//        foreach ($entries as $entry) {
+//            $dash_data['sas'] += $entry->upsells()->weekly($wk)->valid()->count();
+//            $dash_data['calls'] += $entry->cases()->weekly($wk)->calls()->sum('case_count');
+//            $dash_data['emails'] += $entry->cases()->weekly($wk)->emails()->sum('case_count');
+//            $total_yes += $entry->feedbacks()->weekly($wk)->requestSolved()->count();
+//            $total_returns += $entry->feedbacks()->weekly($wk)->count();
+//            //$cosmo = $entry->cosmocom()->weekly($wk)->get();
+//        }
+//        $dash_data['crr'] = $total_returns ? round(($total_yes / $total_returns) * 100, 2) : '';
+//
+//        $data['dash_data'] = $dash_data;
+//        $data['page_title'] = 'Dashboard';
+//        $data['page_desc'] = 'Shows data overview for the current week.';
+//        $data['filter_selection'] = $filter_selection;
+//        $data['filter_list'] = $filter_list;
+//        $data['name_selection'] = $name_selection;
+//        return view('dashboard', $data);
+        
+        return redirect("/survey/home");
     }
 
     public function weeklydata(Request $request) {

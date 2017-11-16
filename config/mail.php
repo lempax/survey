@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'no-reply@survey.cebust.london', 'name' => 'Agent Empowerment Global Survey'],
 
     /*
     |--------------------------------------------------------------------------

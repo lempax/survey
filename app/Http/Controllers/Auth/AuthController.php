@@ -30,7 +30,7 @@ use AuthenticatesAndRegistersUsers,
      */
     protected $redirectTo = '/';
     
-    protected $username = 'username';
+//    protected $username = 'username';
 
     /**
      * Create a new authentication controller instance.

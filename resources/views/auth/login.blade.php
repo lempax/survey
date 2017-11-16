@@ -55,7 +55,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <body class="hold-transition skin-blue login-page">
         <div class="login-box">
             <div class="login-logo">
-                <a href="{{ url('/') }}"><b>MIS</b>::EWS</a>
+                <a href="{{ url('/') }}"><b>Agent Empowerment</b><br/>
+                    Global Survey</a>
             </div>
             <!-- /.login-logo -->
             <div class="login-box-body">
@@ -64,12 +65,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <form role="form" method="POST" action="{{ url('/login') }}">
                     {!! csrf_field() !!}
                     <div class="form-group{{ $errors->has('username') ? ' has-error' : ' has-feedback' }}">
-                        <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}">
-                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <input type="text" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 
-                        @if ($errors->has('username'))
+                        @if ($errors->has('email'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('username') }}</strong>
+                            <strong>{{ $errors->first('email') }}</strong>
                         </span>
                         @endif
                     </div>
@@ -98,7 +99,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- /.col -->
                     </div>
                 </form>
-
+                
+                <a href="{{ url('/password/reset') }}">Set my password</a>
             </div>
             <!-- /.login-box-body -->
         </div>
@@ -111,14 +113,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- iCheck -->
         <script src="{{ asset ("/bower_components/admin-lte/plugins/iCheck/icheck.min.js") }}"></script>
         <script>
-$(function () {
-    $('input').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue',
-        increaseArea: '20%' // optional
-    });
-    $('input[name=username]').select();
-});
+            $(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '20%' // optional
+                });
+                $('input[name=username]').select();
+            });
         </script>
     </body>
 </html>
