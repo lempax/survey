@@ -1,0 +1,106 @@
+C:\xampp\htdocs\mis-ews>
+C:\xampp\htdocs\mis-ews>php artisan tinker
+Psy Shell v0.7.2 (PHP 5.5.15 GÇö cli) by Justin Hileman
+>>> $user = \App\Employee::where('username', 'nmosqueda')->first();
+=> App\Employee {#947
+     uid: 21483526,
+     departmentid: 21238071,
+     username: "nmosqueda",
+     password: "$1$ZujLxsiD$06pQ.46t2iXvSL.o5.m1p1",
+     lname: "Mosqueda",
+     fname: "Nikki Kristel",
+     email: "nikki.mosqueda@1and1.com",
+     roles: "",
+     active: 1,
+     remember_token: null,
+     created_at: "2017-06-15 09:48:53",
+     updated_at: "2017-06-15 09:48:53",
+   }
+>>> $user->user
+=> null
+>>> $user->username
+=> "nmosqueda"
+>>> $user->fname
+=> "Nikki Kristel"
+>>> $user->lname
+=> "Mosqueda"
+>>> $user->department
+=> App\Department {#943
+     gid: 21238084,
+     departmentid: 21238071,
+     name: "Cebu Interim",
+     admin: 21204282,
+     market: "PH",
+     direct_reporters: "[21435891,21443685,21443686,21443687,21443688,21443690,21443887,21446026,21470072,21474905,21475041,21475262,21475263]",
+     members: "[21435891,21443685,21443686,21443687,21443688,21443690,21443887,21446026,21470072,21474905,21475041,21475262,21475263]",
+     created_at: "2017-01-31 23:12:49",
+     updated_at: "2017-01-31 23:12:49",
+   }
+>>> $user->department->name
+=> "Cebu Interim"
+>>> $user->department->departmentid
+=> 21238071
+>>> $user->department->market
+=> "PH"
+>>> $person=\App\Employee::where('username', 'aandrino')->first()
+=> App\Employee {#951
+     uid: 21205464,
+     departmentid: 21447667,
+     username: "aandrino",
+     password: "$1$zBT1TMcY$CyrTJ.nFrflVpYT8DF8RC1",
+     lname: "Andrino",
+     fname: "Allan Joel",
+     email: "allan.andrino@1and1.com",
+     roles: "som",
+     active: 1,
+     remember_token: "EpSbcTJbmTZfAIxheBf5SFmDTMupyU5yuj9yYWTcUaKFMBRAU7dNIKUcycdp",
+     created_at: "2017-01-31 23:12:10",
+     updated_at: "2017-06-15 09:48:52",
+   }
+>>> exit
+Exit:  Goodbye.
+
+C:\xampp\htdocs\mis-ews>php artisan migrate
+
+
+  [Illuminate\Database\QueryException]
+  SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'food_items' already exists (SQL: create table `food
+  _items` (`id` int unsigned not null auto_increment primary key, `itemname` varchar(255) not null, `category` varcha
+  r(255) not null, `price` double(8, 2) not null, `creator` int not null, `departmentid` int not null, `created_at` t
+  imestamp null, `updated_at` timestamp null) default character set utf8 collate utf8_unicode_ci)
+
+
+
+  [PDOException]
+  SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'food_items' already exists
+
+
+
+C:\xampp\htdocs\mis-ews>php artisan migrate
+
+
+  [Illuminate\Database\QueryException]
+  SQLSTATE[42S21]: Column already exists: 1060 Duplicate column name 'creator' (SQL: alter table `food_menu` add `cre
+  ator` int not null)
+
+
+
+  [PDOException]
+  SQLSTATE[42S21]: Column already exists: 1060 Duplicate column name 'creator'
+
+
+
+C:\xampp\htdocs\mis-ews>php artisan migrate
+Migrated: 2017_04_07_164037_add_creator_to_foodmenu_table
+Migrated: 2017_04_25_173600_dropColumns_from_foodmenu_table
+Migrated: 2017_04_25_173715_add_week_column_to_foodmenu_table
+Migrated: 2017_05_12_143855_create_survey_table
+Migrated: 2017_05_12_144454_create_question_table
+Migrated: 2017_05_12_144942_create_answers_table
+Migrated: 2017_05_29_103732_add_columns_survey_table
+Migrated: 2017_05_30_151521_add_status_column_survey_table
+Migrated: 2017_06_01_122458_create_coachingtargets_table
+Migrated: 2017_06_01_125548_drop_type_column
+Migrated: 2017_06_01_125749_add_type_column_in_coachingtargets_table
+Migrated: 2017_06_01_174545_add_surveyid_column_answers_table
+Migrated: 2017_06_02_130428_add_answerid_column_answer_table
