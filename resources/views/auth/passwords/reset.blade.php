@@ -66,7 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <input type="hidden" name="token" value="{{ $token }}">
 
-                    <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : ' has-feedback' }}">
                         <input type="email" name="email" class="form-control" value="{{ $email or old('email') }}"
                                placeholder="Email">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -76,7 +76,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </span>
                         @endif
                     </div>
-                    <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : ' has-feedback' }}">
                         <input type="password" name="password" class="form-control"
                                placeholder="Password">
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>

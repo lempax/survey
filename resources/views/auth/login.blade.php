@@ -64,7 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 <form role="form" method="POST" action="{{ url('/login') }}">
                     {!! csrf_field() !!}
-                    <div class="form-group{{ $errors->has('username') ? ' has-error' : ' has-feedback' }}">
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : ' has-feedback' }}">
                         <input type="text" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 
@@ -120,6 +120,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     increaseArea: '20%' // optional
                 });
                 $('input[name=username]').select();
+                $('input').on('change', function() {
+                    $(this).parent().removeClass('has-error');
+                    $(this).parent().find('.help-block').hide();
+                });
             });
         </script>
     </body>

@@ -69,7 +69,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 
                 <form action="{{ url('password/email') }}" method="post">
                     {!! csrf_field() !!}
-                    <div class="form-group has-feedback" {{ $errors->has('email') ? 'has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : ' has-feedback' }}">
                         <input type="email" placeholder="Email" name="email" autofocus="autofocus" class="form-control" value="{{ $email or old('email') }}"> 
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span> <!---->
                         @if ($errors->has('email'))
@@ -105,6 +105,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     increaseArea: '20%' // optional
                 });
                 $('input[name=username]').select();
+                $('input').on('change', function() {
+                    $(this).parent().removeClass('has-error');
+                    $(this).parent().find('.help-block').hide();
+                });
             });
         </script>
     </body>
