@@ -53,7 +53,7 @@ class LdapSync extends Command
 
         // Initializing employee ldap filters
         $dn = "ou=People,ou=portal,o=1und1,c=DE";
-        $filter = "(&(ObjectClass=spPerson)(|(locationid=21191176)(locationid=21248890)(locationid=21193071)(locationid=21229681)(locationid=21251607)(locationid=21201736)(locationid=21447235))(uid=*))";
+        $filter = "(&(ObjectClass=spPerson)(|(locationid=21191176)(locationid=21248890)(locationid=21193071)(locationid=21229681)(locationid=21251607)(locationid=21201736)(locationid=21447235)(locationid=5012394)(locationid=21436849)(locationid=21445205)(locationid=21423046))(uid=*))";
         $result = array("personid", "uid", "userPassword", "sn", "givenName", "mail", "departmentNumber", "ou", "locationid");
         $emp_search = ldap_search($ldap_conn, $dn, $filter, $result);
         $emp_data = ldap_get_entries($ldap_conn, $emp_search);
@@ -67,7 +67,7 @@ class LdapSync extends Command
         for ($i = 0; $i < count($emp_data) - 1; $i++) {
             $emp = Employee::find($emp_data[$i]['personid'][0]);
             $_pass = isset($emp_data[$i]['userpassword'][0]) ? $emp_data[$i]['userpassword'][0] : '';
-            $_email = isset($emp_data[$i]['mail'][0]) ? $emp_data[$i]['mail'][0] : '';
+            $_email = isset($emp_data[$i]['mail']) ? $emp_data[$i]['mail'][0] : '';
             
             if($emp) {
                 $ctr = 0;
@@ -86,7 +86,7 @@ class LdapSync extends Command
                     $emp->lname = $emp_data[$i]['sn'][0];
                     $ctr++;
                 }
-                if($emp->email != $_email) {
+                if($_email && $emp->email != $_email) {
                     $this->info(sprintf("Email address was updated from %s to %s", $emp->email, $emp_data[$i]['mail'][0]));
                     $emp->email = $emp_data[$i]['mail'][0];
                     $ctr++;
@@ -113,7 +113,7 @@ class LdapSync extends Command
                 $emp_new->fname = $emp_data[$i]['givenname'][0];
                 $emp_new->lname = $emp_data[$i]['sn'][0];
                 $emp_new->email = $_email;
-                $emp->locationid = $emp_data[$i]['locationid'][0];
+                $emp_new->locationid = $emp_data[$i]['locationid'][0];
                 $emp_new->active = 1;
                 $emp_new->save();
                 
